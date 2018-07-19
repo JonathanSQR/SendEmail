@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace SendEmail
@@ -24,6 +20,7 @@ namespace SendEmail
 
         static void Main(string[] args)
         {
+            //Process Command Line Arguements
             if (args == null || args.Length == 0)
             {
                 Console.WriteLine("No Arguements supplied. Type /help for more info.");
@@ -39,7 +36,7 @@ namespace SendEmail
                     {
                         switch (args[i].ToLower())
                         {
-                            //Help Info
+                            //Display Help Info
                             case "/help":
                                 Console.WriteLine("  -h     : Host/Server name or IP.");
                                 Console.WriteLine("  -s     : Subject.");
@@ -71,6 +68,7 @@ namespace SendEmail
                     }
                 }
             }
+
             //Display basic parameters(Debug)
             if (DebugInfo)
             {
@@ -86,15 +84,12 @@ namespace SendEmail
                 Console.ReadLine();
             }
 
+            //Send Email
             SendEmail();
 
+            //Close with Success
             if (DebugInfo) Console.ReadLine();
             Environment.Exit(0);
-        }
-
-        private static void ReadFileForBody()
-        {
-            Body = File.ReadAllText(BodyFilePath);
         }
 
         private static void SendEmail()
@@ -110,8 +105,10 @@ namespace SendEmail
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
             }
 
+            //Try Send Email
             try
             {
+                //Read Body from File if required
                 if (BodyFilePath != null)
                 { 
                         Body = File.ReadAllText(BodyFilePath);
@@ -119,12 +116,13 @@ namespace SendEmail
                 }
                 if (DebugInfo) Console.WriteLine("Body File loaded." + "\n" + Body.Substring(0,10));
 
+                //Setup Mail Object
                 MailMessage message = new MailMessage(Sender, Recipient, Subject, Body);
                 message.IsBodyHtml = true;
 
+                //Send Email
                 if (DebugInfo) Console.WriteLine("Sending Email...");
                 client.Send(message);
-
                 if (DebugInfo) Console.WriteLine("Sent!");
             }
             catch (Exception ex)

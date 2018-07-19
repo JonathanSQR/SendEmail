@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SendEmail")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Generic Console Application to send emails. Supports SSL/TLS.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SendEmail")]
